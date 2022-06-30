@@ -1,10 +1,14 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { User } from 'src/api/user/entities/user.entity';
 
 export class CreateTaskDto {
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   public title: string;
 
-  public user: User;
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  public name: string;
 }

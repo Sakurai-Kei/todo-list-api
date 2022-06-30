@@ -14,16 +14,18 @@ export class UserService {
   @InjectRepository(Task)
   private readonly taskRepository: Repository<Task>;
 
-  create(body: CreateUserDto): Promise<User> {
+  async create(body: CreateUserDto): Promise<User | string> {
+    const checkIfTaken = await this.userRepository.findOneBy({
+      name: body.name,
+    });
+    if (checkIfTaken) {
+      return 'Name already Taken';
+    }
     const user: User = new User();
 
     user.name = body.name;
 
     return this.userRepository.save(user);
-  }
-
-  findAll() {
-    return `This action returns all user`;
   }
 
   async findOne(name: string): Promise<User> {
@@ -35,19 +37,36 @@ export class UserService {
     return user;
   }
 
-  async update(name: string, body: UpdateUserDto): Promise<User> {
+  async update(name: string, body: UpdateUserDto) {
+    const checkIfTaken = await this.userRepository.findOneBy({
+      name: body.name,
+    });
+    if (checkIfTaken) {
+      return 'Name already Taken';
+    }
+
     const user: User = await this.userRepository.findOneBy({ name });
-    const task: Task = new Task();
 
-    task.title = body.title;
-    task.user = user;
+    user.name = body.name;
 
-    await this.taskRepository.save(task);
+    await this.userRepository.save(user);
 
     return user;
   }
 
-  remove(name: string) {
-    return `This action removes a #${name} user`;
+  async remove(name: string): Promise<string> {
+    const checkIfUserExist = await this.userRepository.findOneBy({
+      name,
+    });
+
+    if (!checkIfUserExist) {
+      return 'User does not exist';
+    }
+
+    await this.taskRepository.delete({ user: checkIfUserExist });
+
+    await this.userRepository.delete(checkIfUserExist);
+
+    return `User ${checkIfUserExist.name} has been deleted`;
   }
 }

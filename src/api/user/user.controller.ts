@@ -17,13 +17,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() body: CreateUserDto): Promise<User> {
+  create(@Body() body: CreateUserDto): Promise<User | string> {
     return this.userService.create(body);
-  }
-
-  @Get()
-  findAll() {
-    return this.userService.findAll();
   }
 
   @Get(':name')
