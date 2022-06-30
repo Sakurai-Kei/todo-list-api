@@ -1,11 +1,20 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
+import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
-import { TaskModule } from './task/task.module';
+import { getEnvPath } from './common/helper/env.helper';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
+import { ApiModule } from './api/api.module';
+
+const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
 
 @Module({
-  imports: [UserModule, TaskModule],
+  imports: [
+    ConfigModule.forRoot({ envFilePath, isGlobal: true }),
+    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
+    ApiModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
