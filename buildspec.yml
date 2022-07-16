@@ -1,0 +1,19 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      docker: 20
+  pre_build:
+    commands:
+      - echo Build images for testing if there are any
+  build:
+    commands:
+      - echo Build Production Image
+      - docker build -t sakuraikei/tdl-multicontainer-app-nginx ./nginx
+      - docker build -t sakuraikei/tdl-multicontainer-app-backend ./
+      - echo cat $PASSWORD.txt | docker login --username $DOCKER_ID --password-stdin
+  post_build:
+    commands:
+      - echo Push Production Docker Image
+      - docker push sakuraikei/tdl-multicontainer-app-nginx
+      - docker push sakuraikei/tdl-multicontainer-app-backend

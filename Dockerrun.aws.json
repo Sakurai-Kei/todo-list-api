@@ -1,0 +1,33 @@
+{
+    "AWSEBDockerrunVersion": "3",
+    "containerDefinitions": [
+        {
+            "name": "nginx",
+            "image": "sakuraikei/tdl-multicontainer-app-nginx",
+            "hostname": "nginx",
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80
+                }
+            ],
+            "links": ["backend", "db"],
+            "memory": 100
+        },
+        {
+            "name": "backend",
+            "image": "sakuraikei/tdl-multicontainer-app-backend",
+            "hostname": "backend",
+            "essential": false,
+            "memory": 300
+        },
+        {
+            "name": "db",
+            "image": "postgres",
+            "hostname": "db",
+            "essential": false,
+            "memory": 300
+        }
+    ]
+}

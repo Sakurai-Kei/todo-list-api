@@ -14,6 +14,9 @@ lerna-debug.log*
 # DB
 /pgdata
 
+# Docker and Pipeline
+docker-hub-password.txt
+
 # OS
 .DS_Store
 
