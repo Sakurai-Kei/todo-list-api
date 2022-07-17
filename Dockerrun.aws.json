@@ -12,8 +12,15 @@
                     "containerPort": 80
                 }
             ],
-            "links": ["backend", "db"],
+            "links": ["frontend", "backend", "db"],
             "memory": 100
+        },
+        {
+            "name": "frontend",
+            "image": "sakuraikei/tdl-multicontainer-app-frontend",
+            "hostname": "frontend",
+            "essential": false,
+            "memory": 300
         },
         {
             "name": "backend",

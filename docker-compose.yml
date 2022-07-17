@@ -25,4 +25,10 @@ services:
     depends_on:
       - db
     # ports:
+    #   - '3001:3001'
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    # ports:
     #   - '3000:3000'
