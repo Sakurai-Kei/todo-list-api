@@ -11,9 +11,11 @@ phases:
       - echo Build Production Image
       - docker build -t sakuraikei/tdl-multicontainer-app-nginx ./nginx
       - docker build -t sakuraikei/tdl-multicontainer-app-backend ./
+      - docker build -t sakuraikei/tdl-multicontainer-app-frontend ./client
       - echo cat $PASSWORD.txt | docker login --username $DOCKER_ID --password-stdin
   post_build:
     commands:
       - echo Push Production Docker Image
       - docker push sakuraikei/tdl-multicontainer-app-nginx
       - docker push sakuraikei/tdl-multicontainer-app-backend
+      - docker push sakuraikei/tdl-multicontainer-app-frontend
