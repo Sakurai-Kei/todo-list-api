@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  nginx:
+    image: 816072392943.dkr.ecr.ap-southeast-1.amazonaws.com/tdl-multicontainer-app-nginx:latest
+    ports:
+      - "80:80"
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: TO_DO_LIST
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+  backend:
+    image: 816072392943.dkr.ecr.ap-southeast-1.amazonaws.com/tdl-multicontainer-app-backend:latest
+    depends_on:
+      - db
+    # ports:
+    #   - '3001:3001'
+  frontend:
+    image: 816072392943.dkr.ecr.ap-southeast-1.amazonaws.com/tdl-multicontainer-app-frontend:latest
+    # ports:
+    #   - '3000:3000'
