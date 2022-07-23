@@ -39,6 +39,3 @@ docker-hub-password.txt
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-# Env Variables
-src/common/envs/*
