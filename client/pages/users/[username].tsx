@@ -8,7 +8,10 @@ export default function SingleUser() {
   const [error, setError] = useState('');
 
   async function getUser() {
-    const endpoint = `http://localhost/backend/user/${username}`;
+    const endpoint =
+      process.env.NODE_ENV === 'production'
+        ? `http://54.251.163.42/backend/user/${username}`
+        : `http://localhost/backend/user/${username}`;
     const options = {
       method: 'GET',
       headers: {
