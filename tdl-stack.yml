@@ -2,7 +2,7 @@ version: "3"
 
 services:
   nginx:
-    image: todo-list_nginx
+    image: todo-list-api_nginx
     ports:
       - "80:80"
   db:
@@ -17,12 +17,12 @@ services:
     ports:
       - '5432:5432'
   backend:
-    image: todo-list_backend
+    image: todo-list-api_backend
     depends_on:
       - db
     # ports:
     #   - '3001:3001'
   frontend:
-    image: todo-list_frontend
+    image: todo-list-api_frontend
     # ports:
     #   - '3000:3000'
